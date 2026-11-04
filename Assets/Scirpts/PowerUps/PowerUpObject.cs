@@ -10,6 +10,7 @@ namespace PowerUps
 
         [SerializeField] private Rigidbody2D rb;
         [SerializeField] private Animator animator;
+        [SerializeField] private float outOfBoundsY = -4.25f;
 
         private EPowerUp powerUpType;
 
@@ -42,7 +43,7 @@ namespace PowerUps
         private void FixedUpdate()
         {
             //Zebezpieczenie jak coœ wyjdzie poza mapê
-            if (transform.position.y < -6f)
+            if (transform.position.y < outOfBoundsY)
             {
                 ReturnToPool();
             }

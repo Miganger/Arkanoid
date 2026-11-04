@@ -21,6 +21,7 @@ public class LifesManager : MonoBehaviour
     private void OnDisable()
     {
         BallsController.OnBallsDestroy -= OnBallsDestroy;
+        PowerUpsManager.PowerUpActive -= OnPowerUpActive;
     }
 
     private void OnPowerUpActive(EPowerUp powerUp)

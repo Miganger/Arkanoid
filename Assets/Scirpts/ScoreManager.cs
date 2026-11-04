@@ -25,7 +25,6 @@ public class ScoreManager : MonoBehaviour
             {
                 BestScore = Score;
                 SaveSystem.Data.BestScore = BestScore;
-                SaveSystem.Save();
             }
         }
     }
@@ -67,7 +66,7 @@ public class ScoreManager : MonoBehaviour
     {
         Score += 1000;
     }
-    private void OnBlockDestroyed(Vector3 _)
+    private void OnBlockDestroyed(BlockController _)
     {
         Score += 80;
     }
@@ -85,7 +84,4 @@ public class ScoreManager : MonoBehaviour
             BestScore = SaveSystem.Data.BestScore;
         }
     }
-
-
-
 }

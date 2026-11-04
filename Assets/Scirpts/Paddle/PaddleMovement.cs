@@ -14,6 +14,8 @@ namespace Paddle
         [Header("References")]
         [SerializeField] private Rigidbody2D rb;
 
+        private Vector2 moveDir;
+
         public void EnableActions()
         {
             moveAction.action.Enable();
@@ -25,7 +27,11 @@ namespace Paddle
 
         private void Update()
         {
-            var moveDir = moveAction.action.ReadValue<Vector2>();
+            moveDir = moveAction.action.ReadValue<Vector2>();
+        }
+
+        private void FixedUpdate()
+        {
             if (moveDir.x != 0)
             {
                 rb.linearVelocity = transform.right * moveDir.x * baseSpeed;

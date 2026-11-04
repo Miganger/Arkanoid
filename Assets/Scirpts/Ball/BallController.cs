@@ -157,10 +157,9 @@ namespace Ball
         private void CheckBallSpeed()
         {
             var desiredBallSpeed = GetBallSpeed();
-            var minDesiredBallSpeed = desiredBallSpeed * .8f;
 
-            if (rb.linearVelocity.magnitude <= minDesiredBallSpeed)
-                rb.linearVelocity = UnityEngine.Random.insideUnitCircle * GetBallSpeed();
+            if (rb.linearVelocity.magnitude <= 0.0001f)
+                rb.linearVelocity = UnityEngine.Random.insideUnitCircle.normalized * GetBallSpeed();
         }
 
         private void FixedUpdate()

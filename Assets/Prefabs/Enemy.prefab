@@ -176,7 +176,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1162b341de732884f92be4c391bf4fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemies.EnemyController
-  outOfBoundsY: -6
+  outOfBoundsY: -4.25
   movement: {fileID: 1844477002477586458}
   animationController: {fileID: 5600355251044052588}
   circleCollider: {fileID: 7203930352641470816}

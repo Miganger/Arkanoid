@@ -1,4 +1,5 @@
 
+using Saving;
 using System.Collections;
 using UnityEngine;
 
@@ -29,6 +30,8 @@ namespace StateMachine.Game.States
 
             GameManager.Instance.PaddleController.DisablePaddle();
             GameManager.Instance.PaddleController.DisableActions();
+
+            SaveSystem.Save();
 
             return base.Exit();
         }

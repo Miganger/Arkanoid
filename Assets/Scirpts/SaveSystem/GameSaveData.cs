@@ -6,6 +6,6 @@ namespace Saving
     public class GameSaveData
     {
         public uint BestScore = 0;
-        public int HighestUnlockedLevel = 1;
+        public int HighestUnlockedLevel = 0;
     }
 }

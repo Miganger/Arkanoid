@@ -26,24 +26,26 @@ public class PowerUpsManager : PooledMonoBehaviour
         {
             DeactivePowerUp();
 
+            CurrentPowerUp = powerUpType;
+
             PowerUpActive?.Invoke(powerUpType);
 
             if (powerUpType == EPowerUp.PlayerExtend || 
                 powerUpType == EPowerUp.Disruption)
             {
-                //Dodane dla upgradów które w teorii nie maj¹ efektu przy zakoñczeniu ale mog¹ byæ podniesione ileœ razy
-                CurrentPowerUp = EPowerUp.None;
+                DeactivePowerUp();
                 return;
             }
-
-            CurrentPowerUp = powerUpType;
         }
     }
 
     public void DeactivePowerUp()
     {
         if (CurrentPowerUp != EPowerUp.None)
+        {
             PowerUpEnd?.Invoke(CurrentPowerUp);
+            CurrentPowerUp = EPowerUp.None;
+        }
     }
 
     private void OnEnable()
@@ -55,9 +57,9 @@ public class PowerUpsManager : PooledMonoBehaviour
         BlockController.BlockDestroyed -= OnBlockDestroyed;
     }
 
-    private void OnBlockDestroyed(Vector3 position)
+    private void OnBlockDestroyed(BlockController blockController)
     {
-        SpawnRandomPowerUp(position);
+        SpawnRandomPowerUp(blockController.transform.position);
     }
 
     private void SpawnRandomPowerUp(Vector3 position)

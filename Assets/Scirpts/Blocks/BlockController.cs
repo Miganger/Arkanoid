@@ -7,7 +7,7 @@ namespace Blocks
 {
     public class BlockController : PooledObject
     {
-        public static event System.Action<Vector3> BlockDestroyed;
+        public static event System.Action<BlockController> BlockDestroyed;
 
         [Header("References")]
         [SerializeField] private SpriteRenderer _spriteRenderer;
@@ -15,6 +15,8 @@ namespace Blocks
 
         private int baseHP;
         private int currentHP;
+
+        private bool isHitted = false;
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
@@ -26,6 +28,9 @@ namespace Blocks
 
         public void Hit()
         {
+            if (isHitted)
+                return;
+
             _animator.SetTrigger("Flash");
 
             if (baseHP == 3)
@@ -35,12 +40,14 @@ namespace Blocks
             if(currentHP <= 0)
             {
                 ReturnToPool();
-                BlockDestroyed?.Invoke(transform.position);
+                BlockDestroyed?.Invoke(this);
             }
             else
             {
                 _animator.SetTrigger("Flash");
             }
+
+            isHitted = true;
         }
 
         internal void Setup(int blockHP, Color blockColor)
@@ -48,6 +55,7 @@ namespace Blocks
             baseHP = blockHP;
             currentHP = blockHP;
             _spriteRenderer.color = blockColor;
+            isHitted = false;
         }
     }
 }
