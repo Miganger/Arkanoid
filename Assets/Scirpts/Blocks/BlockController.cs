@@ -41,13 +41,8 @@ namespace Blocks
             {
                 ReturnToPool();
                 BlockDestroyed?.Invoke(this);
+                isHitted = true;
             }
-            else
-            {
-                _animator.SetTrigger("Flash");
-            }
-
-            isHitted = true;
         }
 
         internal void Setup(int blockHP, Color blockColor)

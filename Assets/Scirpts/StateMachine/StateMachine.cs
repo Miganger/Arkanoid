@@ -65,12 +65,14 @@ namespace StateMachine
                     this
                 );
 
+                changeStateCoroutine = null;
                 yield break;
             }
 
             // Nie wchodzimy ponownie do tego samego stanu.
             if (CurrentState == nextState)
             {
+                changeStateCoroutine = null;
                 yield break;
             }
 

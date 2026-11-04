@@ -43,8 +43,10 @@ public class PowerUpsManager : PooledMonoBehaviour
     {
         if (CurrentPowerUp != EPowerUp.None)
         {
-            PowerUpEnd?.Invoke(CurrentPowerUp);
+            var oldPowerUp = CurrentPowerUp;
             CurrentPowerUp = EPowerUp.None;
+
+            PowerUpEnd?.Invoke(oldPowerUp);
         }
     }
 

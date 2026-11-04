@@ -11,7 +11,8 @@ namespace Ball
         public static event System.Action<BallController> OnBallDestroy;
 
         public bool Launched { get; private set; }
-        public Vector2 Direction => rb.linearVelocity.normalized;
+        public Vector2 Direction => rb.linearVelocity.normalized; 
+        public bool IsCatchActive => powerUpsManager.CurrentPowerUp == EPowerUp.Catch;
 
         [Header("References")]
         [SerializeField] private Rigidbody2D rb;
@@ -22,6 +23,15 @@ namespace Ball
 
         private Transform followPosition;
         private Vector2 offset;
+
+        private float baseBallSpeed;
+        private PowerUpsManager powerUpsManager;
+
+        public void Initialize(float baseBallSpeed, PowerUpsManager powerUpsManager)
+        {
+            this.baseBallSpeed = baseBallSpeed;
+            this.powerUpsManager = powerUpsManager;
+        }
 
         private void Awake()
         {
@@ -129,9 +139,10 @@ namespace Ball
 
         private float GetBallSpeed()
         {
-            float baseSpeed = GameManager.Instance.LevelsManager.BaseBallSpeed;
-            bool slowed = GameManager.Instance.PowerUpsManager.CurrentPowerUp == EPowerUp.SpeedDown;
-            return slowed ? baseSpeed * 0.5f : baseSpeed;
+            bool slowed = powerUpsManager.CurrentPowerUp
+                          == EPowerUp.SpeedDown;
+
+            return slowed ? baseBallSpeed * 0.5f : baseBallSpeed;
         }
 
         private void OnPowerUpActive(EPowerUp powerUp)
@@ -156,10 +167,11 @@ namespace Ball
 
         private void CheckBallSpeed()
         {
-            var desiredBallSpeed = GetBallSpeed();
-
             if (rb.linearVelocity.magnitude <= 0.0001f)
-                rb.linearVelocity = UnityEngine.Random.insideUnitCircle.normalized * GetBallSpeed();
+                SetDirection(UnityEngine.Random.insideUnitCircle.normalized);
+
+            if (rb.linearVelocity.magnitude <= GetBallSpeed())
+                RefreshSpeed();
         }
 
         private void FixedUpdate()

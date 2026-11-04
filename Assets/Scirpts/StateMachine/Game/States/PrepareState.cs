@@ -10,7 +10,6 @@ namespace StateMachine.Game.States
         protected override IEnumerator Enter()
         {
             GameManager.Instance.LevelsManager.GenerateLevel(GameManager.Instance.CurrentLevelID);
-            GameManager.Instance.ScoreManager.RestartScore();
 
             GameManager.Instance.UIManager.TransitionController.PlayTransition(ETransition.Reveal);
             yield return new WaitUntil(() => GameManager.Instance.UIManager.TransitionController.IsScreenRevealed);

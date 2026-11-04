@@ -13,6 +13,10 @@ namespace Ball
         [Header("Settings")]
         [SerializeField, Range(5f, 60f)] private float splitAngle = 25f;
 
+        [Header("Dependencies")]
+        [SerializeField] private LevelsManager levelsManager;
+        [SerializeField] private PowerUpsManager powerUpsManager;
+
         public BallController FirstBallReadyToLaunch
         {
             get
@@ -44,6 +48,18 @@ namespace Ball
             BallController.OnBallDestroy -= OnBallDestroy;
             PowerUpsManager.PowerUpActive -= OnPowerUpActive;
             LifesManager.LifeLose -= OnLifeLose;
+        }
+
+        protected override void OnGetPooledObject(PooledObject pooledObject)
+        {
+            BallController ball = (BallController)pooledObject;
+
+            ball.Initialize(
+                levelsManager.BaseBallSpeed,
+                powerUpsManager
+            );
+
+            base.OnGetPooledObject(pooledObject);
         }
 
         private void OnLifeLose(int currentLifes)

@@ -12,11 +12,15 @@ public class GateController : MonoBehaviour
     private void OnEnable()
     {
         PowerUpsManager.PowerUpActive += OnPowerUpActive;
+        PowerUpsManager.PowerUpEnd += OnPowerUpEnd;
     }
     private void OnDisable()
     {
         PowerUpsManager.PowerUpActive -= OnPowerUpActive;
+        PowerUpsManager.PowerUpEnd -= OnPowerUpEnd;
     }
+
+
 
     private void OpenGate(bool open)
     {
@@ -37,7 +41,6 @@ public class GateController : MonoBehaviour
         if (collision.CompareTag("Paddle"))
         {
             GameManager.Instance.EnableNextLevel();
-            OpenGate(false);
         }
     }
 
@@ -47,6 +50,15 @@ public class GateController : MonoBehaviour
         {
             if (!opened)
                 OpenGate(true);
+        }
+    }
+
+    private void OnPowerUpEnd(EPowerUp powerUp)
+    {
+        if(powerUp == EPowerUp.Break)
+        {
+            if (opened)
+                OpenGate(false);
         }
     }
 }

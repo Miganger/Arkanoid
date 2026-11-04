@@ -43,7 +43,7 @@ namespace Ball
             // Tylko gorna powierzchnia paletki daje specjalne odbicie.
             if (collision.collider.CompareTag("Paddle") && normal.y > 0.5f)
             {
-                if (GameManager.Instance.PowerUpsManager.CurrentPowerUp == EPowerUp.Catch)
+                if (controller.IsCatchActive)
                 {
                     controller.CatchOnPaddle();
                     return;

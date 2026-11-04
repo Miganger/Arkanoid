@@ -42,7 +42,8 @@ namespace Enemies
         public void StartMove()
         {
             rb.bodyType = RigidbodyType2D.Dynamic;
-            timer = 0;
+            ChangeToRandomDirection();
+            timer = randomChangeDirectionTime;
         }
 
         private void ChangeToRandomDirection()

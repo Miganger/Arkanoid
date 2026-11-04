@@ -70,6 +70,7 @@ public class GameManager : MonoBehaviour
 
         LifesManager.RestoreLifes();
         StateMachine.ChangeState(EGameState.Prepare);
+        ScoreManager.RestartScore();
     }
     public void LoadGame()
     {
