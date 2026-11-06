@@ -16,6 +16,8 @@ namespace Ball
 
         [Header("References")]
         [SerializeField] private Rigidbody2D rb;
+        [SerializeField] private new Collider2D collider2D;
+        [SerializeField] private BallBounce ballBounce;
 
         [Header("Gameplay")]
         [SerializeField] private float outOfBoundsY = -6f;
@@ -75,7 +77,7 @@ namespace Ball
 
             MakeStatic(false);
             offset = Vector2.zero;
-            SetDirection(initialDirection);
+            SetDirection(ballBounce.NewDirection == Vector2.zero ? initialDirection : ballBounce.CalculateBounce());
         }
 
         public void LaunchSplit(
@@ -97,7 +99,6 @@ namespace Ball
             SetDirection(direction);
         }
 
-        // Wywoluje BallBounce po odbiciu od paletki z aktywnym Catch.
         public void CatchOnPaddle()
         {
             if (!Launched || followPosition == null)
@@ -107,7 +108,6 @@ namespace Ball
             MakeStatic(true);
         }
 
-        // BallBounce ustala kierunek, BallController nadaje prawidlowa szybkosc.
         public void SetDirection(Vector2 direction)
         {
             if (!Launched || direction.sqrMagnitude < 0.0001f)
@@ -116,11 +116,11 @@ namespace Ball
             rb.linearVelocity = direction.normalized * GetBallSpeed();
         }
 
-        // Zachowana publiczna metoda, aby nie lamac obecnych wywolan.
         public void MakeStatic(bool enable)
         {
             Launched = !enable;
             rb.bodyType = enable ? RigidbodyType2D.Kinematic : RigidbodyType2D.Dynamic;
+            collider2D.enabled = !enable;
 
             if (enable)
             {
@@ -190,6 +190,7 @@ namespace Ball
                 return;
 
             ReturnToPool();
+            ballBounce.NewDirection = Vector2.zero;
             OnBallDestroy?.Invoke(this);
         }
     }

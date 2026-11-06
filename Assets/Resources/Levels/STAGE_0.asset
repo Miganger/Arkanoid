@@ -46,3 +46,7 @@ MonoBehaviour:
   - {r: 0, g: 0.41960788, b: 1, a: 1}
   - {r: 1, g: 0.14901961, b: 1, a: 1}
   - {r: 0, g: 0.8431373, b: 0, a: 1}
+  EnemiesIDs: 00000000
+  MaxEnemies: 1
+  SpawnCooldown: 0
+  BossID: -1

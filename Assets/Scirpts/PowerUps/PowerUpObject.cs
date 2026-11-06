@@ -6,7 +6,7 @@ namespace PowerUps
 {
     public class PowerUpObject : PooledObject
     {
-        public static event System.Action PowerUpPickedUp;
+        public static event System.Action PickedUp;
 
         [SerializeField] private Rigidbody2D rb;
         [SerializeField] private Animator animator;
@@ -26,7 +26,7 @@ namespace PowerUps
         {
             if (collision.transform.CompareTag("Paddle"))
             {
-                PowerUpPickedUp?.Invoke();
+                PickedUp?.Invoke();
 
                 GameManager.Instance.PowerUpsManager.ApplyPowerUp(powerUpType);
 

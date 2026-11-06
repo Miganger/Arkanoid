@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Missle : PooledObject
 {
+    public static event System.Action Hit;
+
     [SerializeField] private float baseSpeed = 3f;
 
     private Rigidbody2D rb;
@@ -38,5 +40,6 @@ public class Missle : PooledObject
         }
         rb.linearVelocity = Vector3.zero;
         animator.SetTrigger("Hit");
+        Hit?.Invoke();
     }
 }

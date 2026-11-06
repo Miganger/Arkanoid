@@ -4,6 +4,9 @@ namespace Saving
 {
     public static class SaveSystem
     {
+        public static event System.Action OnSave;
+        public static event System.Action OnLoad;
+
         private const string SaveKey = "Arkanoid.Save";
 
         
@@ -15,6 +18,8 @@ namespace Saving
 
             PlayerPrefs.SetString(SaveKey, json);
             PlayerPrefs.Save();
+
+            OnSave?.Invoke();
         }
 
         public static void Load()
@@ -39,6 +44,8 @@ namespace Saving
             }
 
             Data = saveData;
+
+            OnLoad?.Invoke();
         }
     }
 }

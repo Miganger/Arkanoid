@@ -5,7 +5,7 @@ namespace Enemies
 {
     public class EnemyController : PooledObject
     {
-        public static event System.Action EnemyDeath;
+        public static event System.Action Death;
 
         [Header("Gameplay")]
         [SerializeField] private float outOfBoundsY = -6f;
@@ -31,7 +31,7 @@ namespace Enemies
                 movement.Stop();
                 animationController.PlayDeath();
                 circleCollider.enabled = false;
-                EnemyDeath?.Invoke();
+                Death?.Invoke();
             }
         }
         private void FixedUpdate()

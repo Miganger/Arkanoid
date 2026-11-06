@@ -1,5 +1,6 @@
 using Ball;
 using Enums;
+using Paddle;
 using System;
 using UI;
 using UnityEngine;
@@ -15,13 +16,21 @@ public class LifesManager : MonoBehaviour
 
     private void OnEnable()
     {
+        PaddleController.Hit += OnPaddleHitted;
         BallsController.OnBallsDestroy += OnBallsDestroy;
         PowerUpsManager.PowerUpActive += OnPowerUpActive;
     }
+
     private void OnDisable()
     {
+        PaddleController.Hit -= OnPaddleHitted;
         BallsController.OnBallsDestroy -= OnBallsDestroy;
         PowerUpsManager.PowerUpActive -= OnPowerUpActive;
+    }
+
+    private void OnPaddleHitted()
+    {
+        RemoveLife();
     }
 
     private void OnPowerUpActive(EPowerUp powerUp)

@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class LevelsManager : PooledMonoBehaviour
 {
-    public float BaseBallSpeed { get; private set; }
+    public LevelConfiguration CurrentLevelConfig { get; private set; }
 
     [Header("Configuration")]
     [SerializeField] private List<LevelConfiguration> configs;
@@ -48,9 +48,12 @@ public class LevelsManager : PooledMonoBehaviour
     {
         var config = configs[levelID];
 
-        BaseBallSpeed = config.BaseBallSpeed;
+        CurrentLevelConfig = config;
 
         var blocks = config.GetBlocksMatrix();
+
+        if (blocks == null)
+            return;
 
         var height = blocks.GetLength(0);
         var width = blocks.GetLength(1);

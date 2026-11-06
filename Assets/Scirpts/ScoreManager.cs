@@ -1,5 +1,6 @@
 using Blocks;
 using Enemies;
+using Enemies.Boss;
 using PowerUps;
 using Saving;
 using System;
@@ -47,14 +48,21 @@ public class ScoreManager : MonoBehaviour
     private void OnEnable()
     {
         BlockController.BlockDestroyed += OnBlockDestroyed;
-        PowerUpObject.PowerUpPickedUp += OnPowerUpPickedUp;
-        EnemyController.EnemyDeath += OnEnemyDeath;
+        PowerUpObject.PickedUp += OnPowerUpPickedUp;
+        EnemyController.Death += OnEnemyDeath;
+        BossController.Hit += OnBossHit;
     }
     private void OnDisable()
     {
         BlockController.BlockDestroyed -= OnBlockDestroyed;
-        PowerUpObject.PowerUpPickedUp -= OnPowerUpPickedUp;
-        EnemyController.EnemyDeath -= OnEnemyDeath;
+        PowerUpObject.PickedUp -= OnPowerUpPickedUp;
+        EnemyController.Death -= OnEnemyDeath;
+        BossController.Hit -= OnBossHit;
+    }
+
+    private void OnBossHit()
+    {
+        Score += 1000;
     }
 
     private void OnEnemyDeath()

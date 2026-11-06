@@ -78,12 +78,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PaddleController
   baseWidth: 1
+  immuneTime: 1
   paddleMovement: {fileID: 4803921833863094736}
   fireController: {fileID: 0}
+  animationController: {fileID: 8842573946770136888}
   rb: {fileID: 6209791326553411269}
   capsuleCollider: {fileID: 2840546917824209248}
   spriteRenderer: {fileID: 8659407734408707606}
-  animator: {fileID: 1832051892397692519}
 --- !u!114 &4803921833863094736
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,6 +174,7 @@ GameObject:
   - component: {fileID: 8659407734408707606}
   - component: {fileID: 2840546917824209248}
   - component: {fileID: 1832051892397692519}
+  - component: {fileID: 8842573946770136888}
   m_Layer: 8
   m_Name: PaddleSprite
   m_TagString: Paddle
@@ -303,7 +305,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 3943bfbe45c536047b0a60811c3635a7, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 2
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
@@ -313,6 +315,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8842573946770136888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6515805742618809826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f736efd7c2582bf42992edb72faf230c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Paddle.PaddleAnimationController
 --- !u!1 &9199582627854821874
 GameObject:
   m_ObjectHideFlags: 0

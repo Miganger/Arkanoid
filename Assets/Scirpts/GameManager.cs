@@ -8,6 +8,7 @@ using Enums;
 using Paddle;
 using Enemies;
 using static UnityEngine.Rendering.STP;
+using Enemies.Boss;
 
 public class GameManager : MonoBehaviour
 {
@@ -26,6 +27,7 @@ public class GameManager : MonoBehaviour
     #endregion
 
     public int CurrentLevelID { get; private set; } = 0;
+    public bool IsWin { get; private set; } = false;
 
     public BallsController BallsController => ballsController;
     public PaddleController PaddleController => paddleController;
@@ -36,6 +38,8 @@ public class GameManager : MonoBehaviour
     public LifesManager LifesManager => lifesManager;
     public PowerUpsManager PowerUpsManager => powerUpsManager;
     public EnemiesManager EnemiesManager => enemiesManager;
+    public BossManager BossManager => bossManager;
+    public AudioController AudioController => audioController;
 
     [SerializeField] private PaddleController paddleController;
     [SerializeField] private BallsController ballsController;
@@ -46,6 +50,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private LifesManager lifesManager;
     [SerializeField] private PowerUpsManager powerUpsManager;
     [SerializeField] private EnemiesManager enemiesManager;
+    [SerializeField] private BossManager bossManager;
+    [SerializeField] private AudioController audioController;
 
     [SerializeField] private int startLevel = 0;
 
@@ -65,9 +71,6 @@ public class GameManager : MonoBehaviour
     {
         CurrentLevelID = startLevel;
 
-        SaveSystem.Data.HighestUnlockedLevel = CurrentLevelID;
-        SaveSystem.Save();
-
         LifesManager.RestoreLifes();
         StateMachine.ChangeState(EGameState.Prepare);
         ScoreManager.RestartScore();
@@ -81,7 +84,11 @@ public class GameManager : MonoBehaviour
 
     internal void GameOver()
     {
-        SaveSystem.Data.HighestUnlockedLevel = 0;
+        IsWin = false;
+
+        if (CurrentLevelID > SaveSystem.Data.HighestUnlockedLevel)
+            SaveSystem.Data.HighestUnlockedLevel = CurrentLevelID;
+
         SaveSystem.Save();
         StateMachine.ChangeState(EGameState.Summary);
     }
@@ -102,7 +109,11 @@ public class GameManager : MonoBehaviour
 
     internal void WinEndGame()
     {
-        StateMachine.ChangeState(EGameState.MainMenu);
+        IsWin = true;
+        SaveSystem.Data.HighestUnlockedLevel = CurrentLevelID;
+
+        SaveSystem.Save();
+        StateMachine.ChangeState(EGameState.Summary);
     }
 
     //public void StartNewGame()

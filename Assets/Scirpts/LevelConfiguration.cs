@@ -1,3 +1,4 @@
+using Enums;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,18 +6,29 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "LevelConfiguration", menuName = "Scriptable Objects/LevelConfiguration")]
 public class LevelConfiguration : ScriptableObject
 {
+    [Header("Ball settings")]
     public float BaseBallSpeed = 9f;
+
+    [Header("Blocks settings")]
     [TextArea(8, 8)] public string BlocksMatrix;
     [TextArea(8, 8)] public string ColorsMatrix;
     public List<Color> Colors;
 
+    [Header("Enemies settings")]
+    public List<EEnemyType> EnemiesIDs;
+    public int MaxEnemies;
+    public float SpawnCooldown;
+
+    [Header("Bosses settings")]
+    public EBossType BossID;
+
     public BlockData[,] GetBlocksMatrix()
     {
         if (string.IsNullOrWhiteSpace(BlocksMatrix))
-            throw new ArgumentException("Blocks layout is empty.");
+            return null;
 
         if (string.IsNullOrWhiteSpace(ColorsMatrix))
-            throw new ArgumentException("Colors layout is empty.");
+            return null;
 
         int[,] blocksMatrix = GetIntMatrix(BlocksMatrix);
         int[,] colorsMatrix = GetIntMatrix(ColorsMatrix);

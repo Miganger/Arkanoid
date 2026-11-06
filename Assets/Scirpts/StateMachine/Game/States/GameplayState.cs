@@ -14,6 +14,7 @@ namespace StateMachine.Game.States
             yield return new WaitForSeconds(1);
             GameManager.Instance.PaddleController.EnableActions();
             GameManager.Instance.BallsController.SpawnBall();
+            GameManager.Instance.BossManager.StartSpawning();
             yield return new WaitForSeconds(1);
             GameManager.Instance.EnemiesManager.StartSpawning();
         }
@@ -24,6 +25,7 @@ namespace StateMachine.Game.States
 
 
             GameManager.Instance.EnemiesManager.StopSpawning();
+            GameManager.Instance.BossManager.StopSpawning();
 
             GameManager.Instance.BallsController.ClearBalls();
             GameManager.Instance.LevelsManager.ClearLevel();
@@ -31,7 +33,7 @@ namespace StateMachine.Game.States
             GameManager.Instance.PaddleController.DisablePaddle();
             GameManager.Instance.PaddleController.DisableActions();
 
-            SaveSystem.Save();
+            Time.timeScale = 1f;
 
             return base.Exit();
         }

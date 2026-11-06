@@ -170,9 +170,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 817a33e973a1f154493db57ef30c1eeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BallBounce
-  leftZone: 0.4
-  rightZone: 0.6
-  minimumSideAngle: 10
+  maxPaddleAngle: 65
+  minAngleFromVertical: 5
+  maxAngleFromVertical: 70
 --- !u!114 &4889517819556130927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,5 +186,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BallController
   rb: {fileID: 6921914838870778061}
+  collider2D: {fileID: 4641970175031068391}
+  ballBounce: {fileID: 3466248622630660999}
   outOfBoundsY: -4.25
   launchHorizontalRange: 0.2

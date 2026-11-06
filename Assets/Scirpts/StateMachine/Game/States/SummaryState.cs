@@ -9,7 +9,13 @@ namespace StateMachine.Game.States
     {
         protected override IEnumerator Enter()
         {
-            GameManager.Instance.UIManager.OpenSummaryPanel();
+            if (!GameManager.Instance.IsWin)
+                GameManager.Instance.AudioController.PlaySoundEffect(Enums.Audio.ESoundType.Fail);
+
+            GameManager.Instance.UIManager.SummaryPanel.Open(
+                GameManager.Instance.IsWin,
+                GameManager.Instance.ScoreManager.Score,
+                GameManager.Instance.ScoreManager.BestScore);
             return base.Enter();
         }
 
@@ -17,7 +23,7 @@ namespace StateMachine.Game.States
         {
             GameManager.Instance.UIManager.TransitionController.PlayTransition(ETransition.Cover);
             yield return new WaitUntil(() => GameManager.Instance.UIManager.TransitionController.IsScreenCovered);
-            GameManager.Instance.UIManager.CloseSummaryPanel();
+            GameManager.Instance.UIManager.SummaryPanel.Close();
         }
     }
 }

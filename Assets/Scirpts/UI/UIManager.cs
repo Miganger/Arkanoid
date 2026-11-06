@@ -1,3 +1,4 @@
+using System;
 using UITransition;
 using UnityEngine;
 
@@ -6,6 +7,8 @@ namespace UI
     public class UIManager : MonoBehaviour
     {
         public UITransitionController TransitionController => transitionController;
+        public UIPreparePanel PreparePanel => preparePanel;
+        public UISummaryPanel SummaryPanel => summaryPanel;
 
         [Header("Controllers References")]
         [SerializeField] private UITransitionController transitionController;
@@ -13,21 +16,18 @@ namespace UI
 
         [Header("Panels References")]
         [SerializeField] private GameObject mainMenuPanel;
-        [SerializeField] private GameObject preparePanel;
-        [SerializeField] private GameObject summaryPanel;
+        [SerializeField] private UIPreparePanel preparePanel;
+        [SerializeField] private UISummaryPanel summaryPanel;
+        [SerializeField] private UISettingsPanel settingsPanel;
+
+        public void OpenSettingsPanel()
+        {
+            settingsPanel.Open();
+        }
 
         public void Setup()
         {
             lifes.Setup();
-        }
-
-        public void OpenSummaryPanel()
-        {
-            summaryPanel.SetActive(true);
-        }
-        public void CloseSummaryPanel()
-        {
-            summaryPanel.SetActive(false);
         }
 
         public void OpenMainMenu()
@@ -37,15 +37,6 @@ namespace UI
         public void CloseMainMenu()
         {
             mainMenuPanel.SetActive(false);
-        }
-
-        public void OpenPreparePanel()
-        {
-            preparePanel.SetActive(true);
-        }
-        public void ClosePreparePanel()
-        {
-            preparePanel.SetActive(false);
         }
     }
 }

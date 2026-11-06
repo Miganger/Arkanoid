@@ -8,10 +8,9 @@ namespace Enemies
     {
         [Header("References")]
         [SerializeField] private List<Transform> spawnPoints;
-        
-        [Header("Settings")]
-        [SerializeField] private float spawnCooldown = 5;
-        [SerializeField] private int maxActive = 3;
+
+        [Header("Dependencies")]
+        [SerializeField] private LevelsManager levelsManager;
 
         private bool isActive = false;
         private float timer = 0;
@@ -29,13 +28,16 @@ namespace Enemies
 
         private void Update()
         {
+            if (GameManager.Instance.StateMachine.CurrentStateID != Enums.EGameState.Gameplay)
+                return;
+
             if (!isActive)
                 return;
 
-            if (GetActiveCount() >= maxActive)
+            if (GetActiveCount() >= levelsManager.CurrentLevelConfig.MaxEnemies)
                 return;
 
-            if(timer < spawnCooldown)
+            if(timer < levelsManager.CurrentLevelConfig.SpawnCooldown)
             {
                 timer += Time.deltaTime;
             }
@@ -50,8 +52,11 @@ namespace Enemies
         {
             var enemy = Get() as EnemyController;
             var randSpawn = UnityEngine.Random.Range(0, spawnPoints.Count);
-            var randEnemyID = UnityEngine.Random.Range(0, 5);
-            enemy.Setup(randEnemyID, spawnPoints[randSpawn].position);
+            var randEnemyID = UnityEngine.Random.Range(0, levelsManager.CurrentLevelConfig.EnemiesIDs.Count);
+
+            enemy.Setup(
+                (int)levelsManager.CurrentLevelConfig.EnemiesIDs[randEnemyID], 
+                spawnPoints[randSpawn].position);
         }
     }
 }

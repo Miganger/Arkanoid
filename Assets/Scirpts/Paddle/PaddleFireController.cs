@@ -7,6 +7,9 @@ namespace Paddle
 {
     public class PaddleFireController : PooledMonoBehaviour
     {
+        public static event System.Action LunchBall;
+        public static event System.Action LaserFire;
+
         public Transform StartingPoint => startingPoint;
 
         [Header("Settings")]
@@ -47,6 +50,8 @@ namespace Paddle
             leftMissle.Fire();
             rightMissle.Fire();
 
+            LaserFire?.Invoke();
+
             timer = cooldown;
         }
 
@@ -58,6 +63,7 @@ namespace Paddle
 
                 if (unLunchedBall)
                 {
+                    LunchBall?.Invoke();
                     unLunchedBall.Launch();
                 }
                 else

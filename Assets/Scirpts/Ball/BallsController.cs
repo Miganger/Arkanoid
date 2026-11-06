@@ -1,5 +1,6 @@
 using Enums;
 using ObjectsPool;
+using Paddle;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -39,15 +40,22 @@ namespace Ball
 
         private void OnEnable()
         {
+            PaddleController.Hit += OnPaddleHitted;
             BallController.OnBallDestroy += OnBallDestroy;
             PowerUpsManager.PowerUpActive += OnPowerUpActive;
             LifesManager.LifeLose += OnLifeLose;
         }
         private void OnDisable()
         {
+            PaddleController.Hit -= OnPaddleHitted;
             BallController.OnBallDestroy -= OnBallDestroy;
             PowerUpsManager.PowerUpActive -= OnPowerUpActive;
             LifesManager.LifeLose -= OnLifeLose;
+        }
+
+        private void OnPaddleHitted()
+        {
+            ClearBalls();
         }
 
         protected override void OnGetPooledObject(PooledObject pooledObject)
@@ -55,7 +63,7 @@ namespace Ball
             BallController ball = (BallController)pooledObject;
 
             ball.Initialize(
-                levelsManager.BaseBallSpeed,
+                levelsManager.CurrentLevelConfig.BaseBallSpeed,
                 powerUpsManager
             );
 
